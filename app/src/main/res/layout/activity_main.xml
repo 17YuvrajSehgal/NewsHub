@@ -33,21 +33,23 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/readableBottomBar"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
     </FrameLayout>
 
-    <com.iammert.library.readablebottombar.ReadableBottomBar
-        android:id="@+id/readableBottomBar"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        app:rbb_activeItemType="text"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rbb_tabs="@xml/tabs"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:labelVisibilityMode="labeled"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

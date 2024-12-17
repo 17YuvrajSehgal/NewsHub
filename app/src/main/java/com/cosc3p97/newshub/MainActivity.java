@@ -4,64 +4,50 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.iammert.library.readablebottombar.ReadableBottomBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ReadableBottomBar rb;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        rb = findViewById(R.id.readableBottomBar);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content, new HomeFragment());
-        ft.commit();
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        rb.setOnItemSelectListener(new ReadableBottomBar.ItemSelectListener() {
-            @Override
-            public void onItemSelected(int i) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                switch (i) {
-                    case 0:
-                        ft.replace(R.id.content,new HomeFragment());
-                        ft.commit();
-                        break;
+        // Load the default fragment (e.g., HomeFragment)
+        loadFragment(new HomeFragment());
 
-                    case 1:
-                        ft.replace(R.id.content,new ScienceFragment());
-                        ft.commit();
-                        break;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-                    case 2:
-                        ft.replace(R.id.content,new SportsFragment());
-                        ft.commit();
-                        break;
-
-                    case 3:
-                        ft.replace(R.id.content,new HealthFragment());
-                        ft.commit();
-                        break;
-
-                    case 4:
-                        ft.replace(R.id.content,new EntertainmentFragment());
-                        ft.commit();
-                        break;
-                }
+            // Replace switch-case with if-else
+            if (item.getItemId() == R.id.nav_home) {
+                ft.replace(R.id.content, new HomeFragment());
+            } else if (item.getItemId() == R.id.nav_science) {
+                ft.replace(R.id.content, new ScienceFragment());
+            } else if (item.getItemId() == R.id.nav_sports) {
+                ft.replace(R.id.content, new SportsFragment());
+            } else if (item.getItemId() == R.id.nav_health) {
+                ft.replace(R.id.content, new HealthFragment());
+            } else if (item.getItemId() == R.id.nav_entertainment) {
+                ft.replace(R.id.content, new EntertainmentFragment());
             }
+
+            ft.commit();
+            return true;
         });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content, fragment);
+        ft.commit();
     }
 }
