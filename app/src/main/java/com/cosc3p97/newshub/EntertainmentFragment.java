@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class EntertainmentFragment extends Fragment {
 
-    String API_KEY = "";
+    String API_KEY = Constants.API_KEY;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;

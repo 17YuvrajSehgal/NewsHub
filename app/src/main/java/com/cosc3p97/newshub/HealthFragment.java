@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class HealthFragment extends Fragment {
 
-    String API_KEY = "";
+    String API_KEY = Constants.API_KEY;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;

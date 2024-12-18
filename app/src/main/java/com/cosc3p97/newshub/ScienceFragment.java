@@ -18,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ScienceFragment extends Fragment {
-    String API_KEY = "";
+    String API_KEY = Constants.API_KEY;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;

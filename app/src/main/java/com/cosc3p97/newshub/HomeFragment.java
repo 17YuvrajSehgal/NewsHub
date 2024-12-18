@@ -18,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    String API_KEY = "";
+    String API_KEY = Constants.API_KEY;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;
