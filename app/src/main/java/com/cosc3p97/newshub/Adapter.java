@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cosc3p97.newshub.dao.AppDatabase;
+import com.cosc3p97.newshub.models.Model;
 
 import java.util.List;
 

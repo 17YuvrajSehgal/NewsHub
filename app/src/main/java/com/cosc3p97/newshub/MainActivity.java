@@ -8,6 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.cosc3p97.newshub.fragments.BookmarkFragment;
+import com.cosc3p97.newshub.fragments.EntertainmentFragment;
+import com.cosc3p97.newshub.fragments.HealthFragment;
+import com.cosc3p97.newshub.fragments.HomeFragment;
+import com.cosc3p97.newshub.fragments.ScienceFragment;
+import com.cosc3p97.newshub.fragments.SettingsFragment;
+import com.cosc3p97.newshub.fragments.SportsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

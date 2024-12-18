@@ -1,4 +1,4 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.cosc3p97.newshub.Adapter;
+import com.cosc3p97.newshub.dao.AppDatabase;
+import com.cosc3p97.newshub.models.Model;
+import com.cosc3p97.newshub.R;
 
 import java.util.ArrayList;
 import java.util.List;

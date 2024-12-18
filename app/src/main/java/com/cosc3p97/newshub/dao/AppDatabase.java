@@ -1,10 +1,12 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.dao;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.cosc3p97.newshub.models.Model;
 
 @Database(entities = {Model.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {

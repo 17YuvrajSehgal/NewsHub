@@ -1,4 +1,4 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import java.util.Locale;
+import com.cosc3p97.newshub.dao.AppDatabase;
+import com.cosc3p97.newshub.R;
 
 public class SettingsFragment extends Fragment {
 

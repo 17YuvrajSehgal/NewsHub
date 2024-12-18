@@ -1,4 +1,6 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.api;
+
+import com.cosc3p97.newshub.models.MainNews;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

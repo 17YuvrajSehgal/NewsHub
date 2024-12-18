@@ -1,4 +1,4 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,28 +11,35 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cosc3p97.newshub.Adapter;
+import com.cosc3p97.newshub.api.ApiUtilities;
+import com.cosc3p97.newshub.Constants;
+import com.cosc3p97.newshub.models.MainNews;
+import com.cosc3p97.newshub.models.Model;
+import com.cosc3p97.newshub.R;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HealthFragment extends Fragment {
+public class SportsFragment extends Fragment {
 
     String API_KEY = Constants.API_KEY;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;
 
-    private static final String TAG = "HealthFragment";
+    private static final String TAG = "SportsFragment";
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_health, null);
+        View v = inflater.inflate(R.layout.fragment_sports, null);
 
-        recyclerView = v.findViewById(R.id.health_recycleView);
+        recyclerView = v.findViewById(R.id.sports_recycleView);
         modelArrayList = new ArrayList<>();
         adapter = new Adapter(getContext(), modelArrayList);
 
@@ -46,7 +53,7 @@ public class HealthFragment extends Fragment {
 
     void getNews() {
         String country = "us"; // Example: Retrieve news for the US
-        String category = "health";
+        String category = "sports";
         int pageSize = 100;
 
         Log.d(TAG, "Calling API for country: " + country);

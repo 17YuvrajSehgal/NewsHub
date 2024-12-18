@@ -1,10 +1,12 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.cosc3p97.newshub.models.Model;
 
 import java.util.List;
 

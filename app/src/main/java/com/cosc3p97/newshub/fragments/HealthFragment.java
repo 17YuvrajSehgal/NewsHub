@@ -1,16 +1,22 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.cosc3p97.newshub.Adapter;
+import com.cosc3p97.newshub.api.ApiUtilities;
+import com.cosc3p97.newshub.Constants;
+import com.cosc3p97.newshub.models.MainNews;
+import com.cosc3p97.newshub.models.Model;
+import com.cosc3p97.newshub.R;
 
 import java.util.ArrayList;
 
@@ -18,23 +24,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ScienceFragment extends Fragment {
+public class HealthFragment extends Fragment {
+
     String API_KEY = Constants.API_KEY;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;
 
-    private static final String TAG = "ScienceFragment";
+    private static final String TAG = "HealthFragment";
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_science, null);
+        View v = inflater.inflate(R.layout.fragment_health, null);
 
-        recyclerView = v.findViewById(R.id.science_recycleView);
+        recyclerView = v.findViewById(R.id.health_recycleView);
         modelArrayList = new ArrayList<>();
-        adapter = new Adapter(getContext(),modelArrayList);
+        adapter = new Adapter(getContext(), modelArrayList);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -46,7 +53,7 @@ public class ScienceFragment extends Fragment {
 
     void getNews() {
         String country = "us"; // Example: Retrieve news for the US
-        String category = "science";
+        String category = "health";
         int pageSize = 100;
 
         Log.d(TAG, "Calling API for country: " + country);

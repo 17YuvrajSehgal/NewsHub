@@ -1,4 +1,4 @@
-package com.cosc3p97.newshub;
+package com.cosc3p97.newshub.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
