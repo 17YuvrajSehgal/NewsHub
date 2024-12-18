@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class MainNews {
     private String status;
-    private String totalResults;
+    private String totalresults;
     private ArrayList<Model> articles;
 
-    public MainNews(String status, String totalResults, ArrayList<Model> articles) {
+    public MainNews(String status, String totalresults, ArrayList<Model> articles) {
         this.status = status;
-        this.totalResults = totalResults;
+        this.totalresults = totalresults;
         this.articles = articles;
     }
 
@@ -21,12 +21,12 @@ public class MainNews {
         this.status = status;
     }
 
-    public String getTotalResults() {
-        return totalResults;
+    public String getTotalresults() {
+        return totalresults;
     }
 
-    public void setTotalResults(String totalResults) {
-        this.totalResults = totalResults;
+    public void setTotalresults(String totalresults) {
+        this.totalresults = totalresults;
     }
 
     public ArrayList<Model> getArticles() {
