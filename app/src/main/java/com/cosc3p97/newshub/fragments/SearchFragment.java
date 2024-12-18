@@ -1,5 +1,6 @@
 package com.cosc3p97.newshub.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,7 +57,12 @@ public class SearchFragment extends Fragment {
     }
 
     void getNews(String query) {
-        ApiUtilities.getApiInterface().getNewsFromQuery(query, API_KEY).enqueue(new Callback<MainNews>() {
+
+        String language = getSavedLanguageCode();
+
+        ApiUtilities.getApiInterface().getNewsFromQuery(language, query, API_KEY).enqueue(new Callback<MainNews>() {
+
+
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -91,6 +97,14 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
+    public String getSavedLanguageCode() {
+        // Retrieve saved language code from SharedPreferences (defaulting to "en" if not set)
+        return requireContext()
+                .getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+                .getString("language_code", "en");
+    }
+
 
 
     @Override

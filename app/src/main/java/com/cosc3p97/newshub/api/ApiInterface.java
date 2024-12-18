@@ -27,6 +27,7 @@ public interface ApiInterface {
 
     @GET("everything")
     Call<MainNews> getNewsFromQuery(
+            @Query("language") String language,
             @Query("q") String query,
             @Query("apikey") String apikey
     );
