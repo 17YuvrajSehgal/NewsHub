@@ -6,9 +6,9 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    String BASE_URL = "https://newsapi.org/";
+    String BASE_URL = "https://newsapi.org/v2/";
 
-    @GET("v2/everything")
+    @GET("everything")
     Call<MainNews> getNews(
             @Query("q") String query,
             @Query("from") String fromDate,
