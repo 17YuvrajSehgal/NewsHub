@@ -1,15 +1,11 @@
 <resources>
     <string name="app_name">NewsHub</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="NewsHub">NewsHub</string>
-
-    <string name="Home">Home</string>
-    <string name="Science">Science</string>
-    <string name="Sports">Sports</string>
-    <string name="Health">Health</string>
-    <string name="Entertainment">Entertainment</string>
+    <string name="home">Home</string>
+    <string name="science">Science</string>
+    <string name="sports">Sports</string>
+    <string name="health">Health</string>
+    <string name="entertainment">Entertainment</string>
 
 
 </resources>
