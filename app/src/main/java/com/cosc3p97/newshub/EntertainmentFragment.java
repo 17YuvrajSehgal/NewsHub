@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,9 @@ public class EntertainmentFragment extends Fragment {
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;
+
+    private static final String TAG = "EntertainmentFragment";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,18 +46,29 @@ public class EntertainmentFragment extends Fragment {
     }
 
     void getNews() {
-        ApiUtilities.getApiInterface().getCategory("in", "entertainment", 100, API_KEY).enqueue(new Callback<MainNews>() {
+        String country = "us"; // Example: Retrieve news for the US
+        String category = "entertainment";
+        int pageSize = 100;
+
+        Log.d(TAG, "Calling API for country: " + country);
+
+        ApiUtilities.getApiInterface().getCategory(country, category, pageSize, API_KEY).enqueue(new Callback<MainNews>() {
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "API response received. Number of articles: " + response.body().getArticles().size());
                     modelArrayList.addAll(response.body().getArticles());
                     adapter.notifyDataSetChanged();
+                } else {
+                    Log.e(TAG, "API response unsuccessful. Status code: " + response.code() + ", message: " + response.message());
+                    Toast.makeText(getContext(), "Failed to fetch news.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MainNews> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "API call failed: " + t.getMessage(), t);
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

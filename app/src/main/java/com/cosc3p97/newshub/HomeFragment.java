@@ -23,7 +23,7 @@ public class HomeFragment extends Fragment {
     Adapter adapter;
     ArrayList<Model> modelArrayList;
 
-    private static final String TAG = "HomeFragment"; // Tag for Log statements
+    private static final String TAG = "HomeFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

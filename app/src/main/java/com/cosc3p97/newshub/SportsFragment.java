@@ -24,7 +24,7 @@ public class SportsFragment extends Fragment {
     Adapter adapter;
     ArrayList<Model> modelArrayList;
 
-    private static final String TAG = "SportsFragment"; // Tag for Log statements
+    private static final String TAG = "SportsFragment";
 
 
     @Override
