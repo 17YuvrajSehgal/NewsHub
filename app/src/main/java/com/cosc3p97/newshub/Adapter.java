@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -23,10 +24,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private final Context context;
     private List<Model> modelList;
     private int lastPosition = -1;
+    private AppDatabase database;  // Reference to the Room database
 
     public Adapter(Context context, List<Model> modelList) {
         this.context = context;
         this.modelList = modelList;
+        this.database = AppDatabase.getDatabase(context);  // Initialize the database
     }
 
     @NonNull
@@ -38,22 +41,51 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Model model = modelList.get(position);
+        final Model model = modelList.get(position);
 
-        // Use default values for nulls
         holder.headlines.setText(model.getTitle() != null ? model.getTitle() : "Headline unavailable");
         holder.mainNews.setText(model.getDescription() != null ? model.getDescription() : "Description unavailable");
         holder.author.setText(model.getAuthor() != null ? model.getAuthor() : "Unknown author");
         holder.publishedAt.setText(model.getPublishedAt() != null ? model.getPublishedAt() : "Date unknown");
 
-        // Load image with placeholder and error fallback
+        // Load the image
         Glide.with(context)
                 .load(model.getUrlToImage())
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.error_shape)
                 .into(holder.imageView);
 
-        // Handle click events
+        // Set bookmark icon based on database status
+        new Thread(() -> {
+            Model bookmarkedModel = database.bookmarkDao().getBookmark(model.getUrl());
+            holder.bookmarkIcon.post(() -> holder.bookmarkIcon.setImageResource(
+                    bookmarkedModel != null ? R.drawable.ic_bookmarked : R.drawable.ic_add_bookmark
+            ));
+        }).start();
+
+        // Bookmark icon click listener
+        holder.bookmarkIcon.setOnClickListener(view -> {
+            new Thread(() -> {
+                Model bookmarkedModel = database.bookmarkDao().getBookmark(model.getUrl());
+                if (bookmarkedModel != null) {
+                    // If the article is already bookmarked, remove it
+                    database.bookmarkDao().deleteBookmark(model);
+                    holder.bookmarkIcon.post(() -> {
+                        holder.bookmarkIcon.setImageResource(R.drawable.ic_add_bookmark);
+                        Toast.makeText(context, "Removed from bookmarks", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    // Otherwise, bookmark it
+                    database.bookmarkDao().insertBookmark(model);
+                    holder.bookmarkIcon.post(() -> {
+                        holder.bookmarkIcon.setImageResource(R.drawable.ic_bookmarked);
+                        Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }).start();
+        });
+
+        // Handle the news item click
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ReadNewsActivity.class);
             intent.putExtra("URL", model.getUrl());
@@ -81,7 +113,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     /**
-     * Updates the adapter's data with a DiffUtil for better performance.
+     * Updates the adapter's data with DiffUtil for better performance.
      */
     public void updateList(List<Model> newList) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
@@ -97,13 +129,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                // Compare based on URL, assuming URL is unique for each news item
+                // Assuming each article has a unique URL
                 return modelList.get(oldItemPosition).getUrl().equals(newList.get(newItemPosition).getUrl());
             }
 
             @Override
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                // Compare contents of the items
                 return modelList.get(oldItemPosition).equals(newList.get(newItemPosition));
             }
         });
@@ -112,13 +143,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         diffResult.dispatchUpdatesTo(this);
     }
 
-
     /**
      * ViewHolder: Holds references to the views for each item.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView headlines, mainNews, author, publishedAt;
-        ImageView imageView;
+        ImageView imageView, bookmarkIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -127,6 +157,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             imageView = itemView.findViewById(R.id.newsImageView);
             author = itemView.findViewById(R.id.author);
             publishedAt = itemView.findViewById(R.id.publishedAt);
+            bookmarkIcon = itemView.findViewById(R.id.bookmarkIcon);
         }
     }
 }

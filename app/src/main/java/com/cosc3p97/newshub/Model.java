@@ -1,8 +1,16 @@
 package com.cosc3p97.newshub;
 
-public class Model {
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    String author, title, description, url, urlToImage, publishedAt;
+@Entity(tableName = "bookmarks")
+public class Model {
+    @PrimaryKey
+    @NonNull
+    private String url;
+
+    private String author, title, description, urlToImage, publishedAt;
 
     public Model(String author, String title, String description, String url, String urlToImage, String publishedAt) {
         this.author = author;

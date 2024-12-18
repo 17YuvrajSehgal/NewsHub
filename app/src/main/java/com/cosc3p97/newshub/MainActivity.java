@@ -1,6 +1,7 @@
 package com.cosc3p97.newshub;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+    ImageView bookmarkIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bookmarkIcon = findViewById(R.id.bookmarkIcon);
 
         // Load the default fragment (e.g., HomeFragment)
         loadFragment(new HomeFragment());
@@ -42,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
             ft.commit();
             return true;
+        });
+
+        // Handle bookmark icon click in the toolbar
+        bookmarkIcon.setOnClickListener(v -> {
+            // Open the BookmarkFragment when the bookmark icon is clicked
+            loadFragment(new BookmarkFragment());
         });
     }
 
