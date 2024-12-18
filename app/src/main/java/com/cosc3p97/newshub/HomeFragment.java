@@ -45,29 +45,31 @@ public class HomeFragment extends Fragment {
     }
 
     void getNews() {
-        String query = "tesla";  // You can replace this with any search query
-        String fromDate = "2024-11-17";  // Replace with the date you need
-        String sortBy = "publishedAt";  // You can adjust sorting criteria
+        String country = "us"; // Example: Retrieve news for the US
 
-        ApiUtilities.getApiInterface().getNews(query, fromDate, sortBy, API_KEY).enqueue(new Callback<MainNews>() {
+        Log.d(TAG, "Calling API for country: " + country);
+
+        ApiUtilities.getApiInterface().getNews(country, API_KEY).enqueue(new Callback<MainNews>() {
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: News fetched successfully");
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "API response received. Number of articles: " + response.body().getArticles().size());
                     modelArrayList.addAll(response.body().getArticles());
                     adapter.notifyDataSetChanged();
                 } else {
-                    Log.d(TAG, "onResponse: Response not successful, status code: " + response.code());
+                    Log.e(TAG, "API response unsuccessful. Status code: " + response.code() + ", message: " + response.message());
+                    Toast.makeText(getContext(), "Failed to fetch news.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MainNews> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "API call failed: " + t.getMessage(), t);
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
 
     @Override
