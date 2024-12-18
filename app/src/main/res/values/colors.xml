@@ -9,4 +9,8 @@
     <!-- Grayscale -->
     <color name="light_gray">#F5F5F5</color>
     <color name="dark_gray">#616161</color>
+
+    <color name="bottom_nav_item_color">#757575</color> <!-- Gray text color for items -->
+    <color name="bottom_nav_icon_color">#6200EE</color> <!-- Custom icon color (e.g., purple) -->
+
 </resources>
