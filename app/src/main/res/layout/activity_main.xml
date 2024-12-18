@@ -27,9 +27,7 @@
             android:text="@string/NewsHub"
             android:textSize="20sp"
             android:textColor="@color/black"
-            android:layout_gravity="center"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp" />
+            android:layout_gravity="center" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -42,8 +40,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:padding="8dp" /> <!-- Add padding for internal elements -->
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
