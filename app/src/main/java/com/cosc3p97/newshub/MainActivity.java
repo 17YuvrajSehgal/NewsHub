@@ -12,8 +12,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
-    ImageView bookmarkIcon;
+    private BottomNavigationView bottomNavigationView;
+    private ImageView bookmarkIcon;
+    private ImageView settingsIcon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bookmarkIcon = findViewById(R.id.bookmarkIcon);
+        settingsIcon = findViewById(R.id.settingsIcon);
 
         // Load the default fragment (e.g., HomeFragment)
         loadFragment(new HomeFragment());
@@ -51,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         bookmarkIcon.setOnClickListener(v -> {
             // Open the BookmarkFragment when the bookmark icon is clicked
             loadFragment(new BookmarkFragment());
+        });
+
+        settingsIcon.setOnClickListener(v ->{
+            loadFragment(new SettingsFragment());
         });
     }
 

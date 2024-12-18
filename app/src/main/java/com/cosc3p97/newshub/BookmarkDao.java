@@ -21,5 +21,8 @@ public interface BookmarkDao {
 
     @Query("SELECT * FROM bookmarks WHERE url = :url LIMIT 1")
     Model getBookmark(String url);
+
+    @Query("DELETE FROM bookmarks")
+    void clearAll(); // Method to clear all bookmarks
 }
 

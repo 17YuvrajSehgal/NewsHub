@@ -22,7 +22,9 @@
         <!-- Using ConstraintLayout inside Toolbar for proper alignment -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="15dp">
 
             <!-- Title Text -->
             <TextView
@@ -38,16 +40,30 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Bookmark Icon -->
+
             <ImageView
                 android:id="@+id/bookmarkIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:contentDescription="Bookmark Icon"
                 android:src="@drawable/ic_bookmarks"
+                app:layout_constraintBottom_toBottomOf="@+id/settingsIcon"
+                app:layout_constraintEnd_toStartOf="@+id/settingsIcon"
+                app:layout_constraintTop_toTopOf="@+id/settingsIcon" />
+
+            <ImageView
+                android:id="@+id/settingsIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Settings Icon"
+                android:src="@drawable/baseline_settings_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -62,6 +78,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
 
     <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
