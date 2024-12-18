@@ -28,8 +28,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: HomeFragment is created"); // Debug log
-        View v = inflater.inflate(R.layout.fragment_home, null);
+        Log.d(TAG, "onCreateView: HomeFragment is created");
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = v.findViewById(R.id.home_recycleView);
         modelArrayList = new ArrayList<>();
@@ -44,9 +44,11 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Fetch news articles from the API
+     */
     void getNews() {
         String country = "us"; // Example: Retrieve news for the US
-
         Log.d(TAG, "Calling API for country: " + country);
 
         ApiUtilities.getApiInterface().getNews(country, API_KEY).enqueue(new Callback<MainNews>() {
@@ -54,8 +56,26 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "API response received. Number of articles: " + response.body().getArticles().size());
-                    modelArrayList.addAll(response.body().getArticles());
-                    adapter.notifyDataSetChanged();
+
+                    // Filter out articles that are null or contain no content
+                    ArrayList<Model> validArticles = new ArrayList<>();
+                    for (Model model : response.body().getArticles()) {
+                        // Validate each article to make sure it's not null
+                        if (model != null && model.getTitle() != null && !model.getTitle().isEmpty()) {
+                            validArticles.add(model);
+                        } else {
+                            Log.d(TAG, "Null or empty article removed: " + model);
+                        }
+                    }
+
+                    // Update only the valid articles
+                    if (!validArticles.isEmpty()) {
+                        modelArrayList.clear();  // Clear old list before adding new data
+                        modelArrayList.addAll(validArticles);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.e(TAG, "No valid articles to display");
+                    }
                 } else {
                     Log.e(TAG, "API response unsuccessful. Status code: " + response.code() + ", message: " + response.message());
                     Toast.makeText(getContext(), "Failed to fetch news.", Toast.LENGTH_SHORT).show();
@@ -69,8 +89,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-
 
     @Override
     public void onPause() {

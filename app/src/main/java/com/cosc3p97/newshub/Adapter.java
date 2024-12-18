@@ -11,69 +11,115 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
+import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    Context c;
-    ArrayList<Model> modelArrayList;
+    private final Context context;
+    private List<Model> modelList;
     private int lastPosition = -1;
 
-    public Adapter(Context c, ArrayList<Model> modelArrayList) {
-        this.c = c;
-        this.modelArrayList = modelArrayList;
+    public Adapter(Context context, List<Model> modelList) {
+        this.context = context;
+        this.modelList = modelList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(c).inflate(R.layout.item_layout, parent, false);
-        return new ViewHolder(v);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
-        holder.headlines.setText(modelArrayList.get(position).getTitle());
-        holder.mainNews.setText(modelArrayList.get(position).getDescription());
-        holder.author.setText(modelArrayList.get(position).getAuthor());
-        holder.publishedAt.setText(modelArrayList.get(position).getPublishedAt() + "Source" + modelArrayList.get(position).getAuthor());
-        setAnimation(holder.itemView, position);
-        Glide.with(c).load(modelArrayList.get(position).getUrlToImage()).into(holder.imageView);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Model model = modelList.get(position);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent i = new Intent(c,ReadNewsActivity.class);
-                i.putExtra("URL", modelArrayList.get(position).getUrl());
-                c.startActivity(i);
-            }
+        // Use default values for nulls
+        holder.headlines.setText(model.getTitle() != null ? model.getTitle() : "Headline unavailable");
+        holder.mainNews.setText(model.getDescription() != null ? model.getDescription() : "Description unavailable");
+        holder.author.setText(model.getAuthor() != null ? model.getAuthor() : "Unknown author");
+        holder.publishedAt.setText(model.getPublishedAt() != null ? model.getPublishedAt() : "Date unknown");
+
+        // Load image with placeholder and error fallback
+        Glide.with(context)
+                .load(model.getUrlToImage())
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_shape)
+                .into(holder.imageView);
+
+        // Handle click events
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ReadNewsActivity.class);
+            intent.putExtra("URL", model.getUrl());
+            context.startActivity(intent);
         });
+
+        // Set animation
+        setAnimation(holder.itemView, position);
     }
 
     @Override
     public int getItemCount() {
-        return modelArrayList.size();
+        return modelList != null ? modelList.size() : 0;
     }
 
-    private void setAnimation(View viewToAnimate, int position)
-    {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition)
-        {
-            Animation animation = AnimationUtils.loadAnimation(c,R.anim.slide_in);
+    /**
+     * Animates item if it's displayed for the first time.
+     */
+    private void setAnimation(View viewToAnimate, int position) {
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
     }
 
+    /**
+     * Updates the adapter's data with a DiffUtil for better performance.
+     */
+    public void updateList(List<Model> newList) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return modelList != null ? modelList.size() : 0;
+            }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                // Compare based on URL, assuming URL is unique for each news item
+                return modelList.get(oldItemPosition).getUrl().equals(newList.get(newItemPosition).getUrl());
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                // Compare contents of the items
+                return modelList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+        });
+
+        modelList = newList;
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+
+    /**
+     * ViewHolder: Holds references to the views for each item.
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView headlines, mainNews, author, publishedAt;
         ImageView imageView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             headlines = itemView.findViewById(R.id.headline);
