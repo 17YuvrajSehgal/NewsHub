@@ -7,5 +7,10 @@
     <string name="health">Health</string>
     <string name="entertainment">Entertainment</string>
 
+    <string-array name="sort_by_options">
+        <item>publishedAt</item>
+        <item>popularity</item>
+        <item>relevancy</item>
+    </string-array>
 
 </resources>

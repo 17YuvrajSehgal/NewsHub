@@ -32,5 +32,14 @@ public interface ApiInterface {
             @Query("apikey") String apikey
     );
 
+    @GET("everything")
+    Call<MainNews> getNewsFromQueryWithAllFilters(
+            @Query("q") String query,                   // Search query (keywords)
+            @Query("from") String fromDate,             // From date (ISO 8601)
+            @Query("to") String toDate,                 // To date (ISO 8601)
+            @Query("language") String language,         // Language of the articles
+            @Query("sortBy") String sortBy,             // Sorting criteria (relevancy, popularity, publishedAt)
+            @Query("apikey") String apiKey              // API key
+    );
 
 }
