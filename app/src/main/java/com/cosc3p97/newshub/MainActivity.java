@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         settingsIcon.setOnClickListener(v -> loadFragment(new SettingsFragment()));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.trim().isEmpty()) {
@@ -124,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadSearchFragment(String query) {
+        lastQuery = query; // Save the last query for filters
         SearchFragment searchFragment = new SearchFragment();
         Bundle args = new Bundle();
         args.putString("query", query); // Pass the query to the search fragment
