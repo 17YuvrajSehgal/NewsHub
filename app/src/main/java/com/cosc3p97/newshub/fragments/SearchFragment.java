@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +31,8 @@ public class SearchFragment extends Fragment {
     Adapter adapter;
     ArrayList<Model> modelArrayList;
     private static final String TAG = "SearchFragment";
+    private String query;
+    private boolean isFiltered = false; // Flag to check if filter is applied
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,23 +47,21 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Get search query passed from MainActivity
-        Bundle args = getArguments();
-        if (args != null) {
-            String query = args.getString("query", "bitcoin");  // Default to "bitcoin" if no query
-            getNews(query);  // Fetch news based on the query
+        // Get search query passed from MainActivity or FilterFragment
+        if (getArguments() != null) {
+            query = getArguments().getString("query", "bitcoin");
+            if (!isFiltered) { // Only fetch news if filter is not applied
+                getNews(query);
+            }
         }
 
         return v;
     }
 
     void getNews(String query) {
-
         String language = getSavedLanguageCode();
 
         ApiUtilities.getApiInterface().getNewsFromQuery(language, query, API_KEY).enqueue(new Callback<MainNews>() {
-
-
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -86,26 +85,26 @@ public class SearchFragment extends Fragment {
                     }
                 } else {
                     Log.e(TAG, "API response unsuccessful. Status code: " + response.code() + ", message: " + response.message());
-                    Toast.makeText(getContext(), "Failed to fetch news.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MainNews> call, Throwable t) {
                 Log.e(TAG, "API call failed: " + t.getMessage(), t);
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public String getSavedLanguageCode() {
-        // Retrieve saved language code from SharedPreferences (defaulting to "en" if not set)
         return requireContext()
                 .getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
                 .getString("language_code", "en");
     }
 
-
+    // Method to mark the fragment as filtered
+    public void setFiltered(boolean filtered) {
+        isFiltered = filtered;
+    }
 
     @Override
     public void onPause() {
