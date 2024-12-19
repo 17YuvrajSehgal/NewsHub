@@ -116,12 +116,27 @@ public class FilterFragment extends Fragment {
                     MainNews mainNews = response.body();
                     Log.d(TAG, "API Response successful. Articles count: " + mainNews.getArticles().size());
 
-                    // Clear the existing list and add new data
-                    modelArrayList.clear();
-                    modelArrayList.addAll(mainNews.getArticles());
+                    // Filter out articles that are null, empty, or contain unwanted content
+                    ArrayList<Model> validArticles = new ArrayList<>();
+                    for (Model model : mainNews.getArticles()) {
+                        // Validate each article to make sure it's not null, empty, or has an unwanted title
+                        if (model != null && model.getTitle() != null && !model.getTitle().isEmpty()
+                                && !model.getTitle().equals("[Removed]")) {
+                            validArticles.add(model);
+                        } else {
+                            Log.d(TAG, "Null, empty, or unwanted article removed: " + model);
+                        }
+                    }
 
-                    // Notify adapter about the data change
-                    adapter.notifyDataSetChanged();
+                    // Update only the valid articles
+                    if (!validArticles.isEmpty()) {
+                        modelArrayList.clear();  // Clear old list before adding new data
+                        modelArrayList.addAll(validArticles);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.e(TAG, "No valid articles to display");
+                        Toast.makeText(getContext(), "No valid news found.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Log.e(TAG, "API Response unsuccessful. Code: " + response.code() + ", Message: " + response.message());
                     Toast.makeText(getContext(), "Failed to fetch news. Try again.", Toast.LENGTH_SHORT).show();
@@ -130,8 +145,8 @@ public class FilterFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MainNews> call, Throwable t) {
-                Log.e(TAG, "API Call failed: " + t.getMessage(), t);
-                Toast.makeText(getContext(), "An error occurred while fetching data.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "API call failed: " + t.getMessage(), t);
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
