@@ -3,46 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FilterFragment"
-    android:padding="16dp">
+    android:background="@color/white"
+    android:padding="16dp"
+    tools:context=".fragments.FilterFragment"> <!-- Use the app's background color -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <!-- Title -->
         <TextView
             android:id="@+id/SortArticlesBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Sort Articles By"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+            android:textStyle="bold" />
 
         <!-- Sorting Filter Buttons -->
         <Button
             android:id="@+id/filterRelevancyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/black"
             android:text="Relevancy"
-            android:layout_marginBottom="8dp" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/filterPopularityButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/black"
             android:text="Popularity"
-            android:layout_marginBottom="8dp" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/filterPublishedAtButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/black"
             android:text="Published At"
-            android:layout_marginBottom="8dp" />
+            android:textColor="@color/white" />
 
         <!-- RecyclerView displaying the news results -->
         <androidx.recyclerview.widget.RecyclerView
@@ -51,6 +59,5 @@
             android:layout_height="match_parent"
             android:layout_marginTop="16dp" />
     </LinearLayout>
-
 
 </FrameLayout>
