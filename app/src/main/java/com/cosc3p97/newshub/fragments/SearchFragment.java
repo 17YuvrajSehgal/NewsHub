@@ -48,7 +48,7 @@ public class SearchFragment extends Fragment {
 
         // Get search query passed from MainActivity or FilterFragment
         if (getArguments() != null) {
-            query = getArguments().getString("query", "bitcoin");
+            query = getArguments().getString("query");
             getNews(query);
         }
 
