@@ -12,14 +12,14 @@ public interface ApiInterface {
 
     @GET("top-headlines")
     Call<MainNews> getNews(
-            @Query("country") String country,
+            @Query("language") String language,
             @Query("apiKey") String apiKey
     );
 
 
     @GET("top-headlines")
     Call<MainNews> getCategory(
-            @Query("country") String country,
+            @Query("language") String language,
             @Query("category") String category,
             @Query("pageSize") int pageSize,
             @Query("apikey") String apikey
@@ -35,6 +35,7 @@ public interface ApiInterface {
     @GET("everything")
     Call<MainNews> getNewsWithSortBy(
             @Query("q") String query,                   // Search query (keywords)
+            @Query("language") String language,
             @Query("sortBy") String sortBy,             // Sorting criteria (relevancy, popularity, publishedAt)
             @Query("apikey") String apiKey              // API key
     );

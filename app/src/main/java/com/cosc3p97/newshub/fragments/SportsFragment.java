@@ -1,5 +1,6 @@
 package com.cosc3p97.newshub.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,13 +54,11 @@ public class SportsFragment extends Fragment {
     }
 
     void getNews() {
-        String country = "us"; // Example: Retrieve news for the US
         String category = "sports";
         int pageSize = 100;
+        String language = getSavedLanguageCode();
 
-        Log.d(TAG, "Calling API for country: " + country);
-
-        ApiUtilities.getApiInterface().getCategory(country, category, pageSize, API_KEY).enqueue(new Callback<MainNews>() {
+        ApiUtilities.getApiInterface().getCategory(language, category, pageSize, API_KEY).enqueue(new Callback<MainNews>() {
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -92,5 +91,11 @@ public class SportsFragment extends Fragment {
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public String getSavedLanguageCode() {
+        return requireContext()
+                .getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+                .getString("language_code", "en");
     }
 }

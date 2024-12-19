@@ -1,5 +1,6 @@
 package com.cosc3p97.newshub.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,10 +56,9 @@ public class HomeFragment extends Fragment {
      * Fetch news articles from the API
      */
     void getNews() {
-        String country = "us"; // Example: Retrieve news for the US
-        Log.d(TAG, "Calling API for country: " + country);
+        String language = getSavedLanguageCode();
 
-        ApiUtilities.getApiInterface().getNews(country, API_KEY).enqueue(new Callback<MainNews>() {
+        ApiUtilities.getApiInterface().getNews(language, API_KEY).enqueue(new Callback<MainNews>() {
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -96,6 +96,12 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public String getSavedLanguageCode() {
+        return requireContext()
+                .getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+                .getString("language_code", "en");
     }
 
     @Override

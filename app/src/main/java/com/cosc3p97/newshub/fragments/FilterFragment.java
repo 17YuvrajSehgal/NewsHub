@@ -1,5 +1,6 @@
 package com.cosc3p97.newshub.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,13 +104,15 @@ public class FilterFragment extends Fragment {
     }
 
     private void getNews(String sortBy) {
+
+        String language = getSavedLanguageCode();
         if (query == null || query.trim().isEmpty()) {
             Toast.makeText(getContext(), "Query is empty or null.", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Query is null or empty. Cannot make API call.");
             return;
         }
 
-        ApiUtilities.getApiInterface().getNewsWithSortBy(query, sortBy, API_KEY).enqueue(new Callback<MainNews>() {
+        ApiUtilities.getApiInterface().getNewsWithSortBy(query, language, sortBy, API_KEY).enqueue(new Callback<MainNews>() {
             @Override
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -149,5 +152,11 @@ public class FilterFragment extends Fragment {
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public String getSavedLanguageCode() {
+        return requireContext()
+                .getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+                .getString("language_code", "en");
     }
 }
