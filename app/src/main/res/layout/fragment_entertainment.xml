@@ -10,6 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/entertainment_recycleView"
         android:layout_width="match_parent"
+        android:layout_margin="7dp"
         android:layout_height="match_parent" />
 
 </RelativeLayout>

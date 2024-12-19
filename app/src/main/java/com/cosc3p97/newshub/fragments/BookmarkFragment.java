@@ -54,12 +54,13 @@ public class BookmarkFragment extends Fragment {
             if (bookmarks != null && !bookmarks.isEmpty()) {
                 modelList.clear();
                 modelList.addAll(bookmarks);
-                // Update the UI on the main thread
+                // Update the UI on the main thread only if there are bookmarks
                 getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
             } else {
-                // Show a Toast message on the UI thread if no bookmarks are found
+                // Show the Toast on the main thread but do nothing to the UI
                 getActivity().runOnUiThread(() ->
-                        Toast.makeText(getContext(), "No bookmarks available", Toast.LENGTH_SHORT).show()
+
+                        Toast.makeText(getActivity(), "No meetings scheduled for this date.", Toast.LENGTH_SHORT).show()
                 );
             }
         }).start();
