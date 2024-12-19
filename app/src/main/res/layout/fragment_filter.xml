@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/black"
-            android:text="Published At"
+            android:text="Published Date"
             android:textColor="@color/white" />
 
         <!-- RecyclerView displaying the news results -->

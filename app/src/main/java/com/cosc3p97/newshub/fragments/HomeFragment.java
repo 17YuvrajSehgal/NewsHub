@@ -19,6 +19,7 @@ import com.cosc3p97.newshub.models.MainNews;
 import com.cosc3p97.newshub.models.Model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,7 +68,7 @@ public class HomeFragment extends Fragment {
                     ArrayList<Model> validArticles = new ArrayList<>();
                     for (Model model : response.body().getArticles()) {
                         // Validate each article to make sure it's not null
-                        if (model != null && model.getTitle() != null && !model.getTitle().isEmpty()) {
+                        if (model != null && !Objects.equals(model.getTitle(), "[Removed]") && !model.getTitle().isEmpty()) {
                             validArticles.add(model);
                         } else {
                             Log.d(TAG, "Null or empty article removed: " + model);
