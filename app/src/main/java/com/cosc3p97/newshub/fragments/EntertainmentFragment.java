@@ -20,6 +20,7 @@ import com.cosc3p97.newshub.models.Model;
 import com.cosc3p97.newshub.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,11 +65,25 @@ public class EntertainmentFragment extends Fragment {
             public void onResponse(Call<MainNews> call, Response<MainNews> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "API response received. Number of articles: " + response.body().getArticles().size());
-                    modelArrayList.addAll(response.body().getArticles());
-                    adapter.notifyDataSetChanged();
+
+                    ArrayList<Model> validArticles = new ArrayList<>();
+                    for (Model model : response.body().getArticles()) {
+                        if (model != null && !Objects.equals(model.getTitle(), "[Removed]") && !model.getTitle().isEmpty()) {
+                            validArticles.add(model);
+                        } else {
+                            Log.d(TAG, "Null or empty article removed: " + model);
+                        }
+                    }
+
+                    if (!validArticles.isEmpty()) {
+                        modelArrayList.clear();
+                        modelArrayList.addAll(validArticles);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.e(TAG, "No valid articles to display");
+                    }
                 } else {
                     Log.e(TAG, "API response unsuccessful. Status code: " + response.code() + ", message: " + response.message());
-                    Toast.makeText(getContext(), "Failed to fetch news.", Toast.LENGTH_SHORT).show();
                 }
             }
 
