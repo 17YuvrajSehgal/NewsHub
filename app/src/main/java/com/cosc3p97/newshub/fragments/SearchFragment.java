@@ -32,7 +32,6 @@ public class SearchFragment extends Fragment {
     ArrayList<Model> modelArrayList;
     private static final String TAG = "SearchFragment";
     private String query;
-    private boolean isFiltered = false; // Flag to check if filter is applied
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,9 +49,7 @@ public class SearchFragment extends Fragment {
         // Get search query passed from MainActivity or FilterFragment
         if (getArguments() != null) {
             query = getArguments().getString("query", "bitcoin");
-            if (!isFiltered) { // Only fetch news if filter is not applied
-                getNews(query);
-            }
+            getNews(query);
         }
 
         return v;
@@ -101,10 +98,6 @@ public class SearchFragment extends Fragment {
                 .getString("language_code", "en");
     }
 
-    // Method to mark the fragment as filtered
-    public void setFiltered(boolean filtered) {
-        isFiltered = filtered;
-    }
 
     @Override
     public void onPause() {
