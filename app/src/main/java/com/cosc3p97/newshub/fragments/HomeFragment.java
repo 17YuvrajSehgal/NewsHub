@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cosc3p97.newshub.Adapter;
-import com.cosc3p97.newshub.api.ApiUtilities;
 import com.cosc3p97.newshub.Constants;
+import com.cosc3p97.newshub.R;
+import com.cosc3p97.newshub.api.ApiUtilities;
 import com.cosc3p97.newshub.models.MainNews;
 import com.cosc3p97.newshub.models.Model;
-import com.cosc3p97.newshub.R;
 
 import java.util.ArrayList;
 
@@ -25,12 +25,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
+    private static final String TAG = "HomeFragment";
     String API_KEY = Constants.API_KEY;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;
-
-    private static final String TAG = "HomeFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +81,7 @@ public class HomeFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     } else {
                         Log.e(TAG, "No valid articles to display");
+                        Toast.makeText(getContext(), "No valid news found.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e(TAG, "API response unsuccessful. Status code: " + response.code() + ", message: " + response.message());
