@@ -2,7 +2,6 @@ package com.cosc3p97.newshub;
 
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ImageView bookmarkIcon, settingsIcon, filterIcon;
     private SearchView searchView;
-    private PopupWindow sortByPopupWindow;
     private String lastQuery; // Store the last search query
 
     @Override
