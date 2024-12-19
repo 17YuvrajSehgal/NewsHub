@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -36,6 +37,8 @@ public class FilterFragment extends Fragment {
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<Model> modelArrayList;
+    Button filterRelevancyButton, filterPopularityButton, filterPublishedAtButton;
+    TextView sortArticlesByTextView;
 
     public static FilterFragment newInstance(String query) {
         FilterFragment fragment = new FilterFragment();
@@ -52,6 +55,11 @@ public class FilterFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_filter, container, false);
 
         recyclerView = v.findViewById(R.id.filter_recycleView);
+        filterRelevancyButton = v.findViewById(R.id.filterRelevancyButton);
+        filterPopularityButton = v.findViewById(R.id.filterPopularityButton);
+        filterPublishedAtButton = v.findViewById(R.id.filterPublishedAtButton);
+        sortArticlesByTextView = v.findViewById(R.id.SortArticlesBy);
+
         modelArrayList = new ArrayList<>();
         adapter = new Adapter(getContext(), modelArrayList);
 
@@ -63,32 +71,38 @@ public class FilterFragment extends Fragment {
             query = getArguments().getString("query");
         }
 
-        // Find the buttons
-        Button filterRelevancyButton = v.findViewById(R.id.filterRelevancyButton);
-        Button filterPopularityButton = v.findViewById(R.id.filterPopularityButton);
-        Button filterPublishedAtButton = v.findViewById(R.id.filterPublishedAtButton);
-
         // Set click listeners for each button
         filterRelevancyButton.setOnClickListener(view -> {
             Log.d(TAG, "Relevancy filter selected. Query: " + query);
-            getNews("relevancy");
+            hideButtonsAndFetchNews("relevancy");
         });
 
         filterPopularityButton.setOnClickListener(view -> {
             Log.d(TAG, "Popularity filter selected. Query: " + query);
-            getNews("popularity");
+            hideButtonsAndFetchNews("popularity");
         });
 
         filterPublishedAtButton.setOnClickListener(view -> {
             Log.d(TAG, "Published At filter selected. Query: " + query);
-            getNews("publishedAt");
+            hideButtonsAndFetchNews("publishedAt");
         });
 
         return v;
     }
 
-    private void getNews(String sortBy) {
+    private void hideButtonsAndFetchNews(String sortBy) {
+        // Hide the filter buttons
 
+        filterRelevancyButton.setVisibility(View.GONE);
+        filterPopularityButton.setVisibility(View.GONE);
+        filterPublishedAtButton.setVisibility(View.GONE);
+        sortArticlesByTextView.setVisibility(View.GONE);
+
+        // Fetch the news data
+        getNews(sortBy);
+    }
+
+    private void getNews(String sortBy) {
         if (query == null || query.trim().isEmpty()) {
             Toast.makeText(getContext(), "Query is empty or null.", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Query is null or empty. Cannot make API call.");
