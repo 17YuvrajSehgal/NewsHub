@@ -8,6 +8,7 @@
     <!-- RecyclerView displaying the news results -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycleView"
+        android:layout_margin="7dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp" />

@@ -1,15 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/rounded_corners"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:elevation="5dp"
+    android:padding="5dp"
+    android:layout_margin="3dp">
 
     <!-- Title and Bookmark Icon Section (Horizontal Layout) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
         <!-- News Headline TextView -->
@@ -19,10 +21,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-medium"
-            android:paddingEnd="8dp"
+            android:paddingEnd="6dp"
             android:text="News Headline"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <!-- Bookmark Icon -->
@@ -38,7 +40,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <TextView
@@ -49,10 +51,10 @@
             android:layout_weight="1"
             android:background="@color/light_gray"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="6dp"
             android:text="Text goes here..."
             android:textColor="@color/dark_gray"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/newsImageView"
@@ -69,7 +71,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="9dp"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -79,7 +81,7 @@
             android:layout_height="wrap_content"
             android:text="Author Name"
             android:textColor="@color/primary"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/publishedAt"
@@ -87,7 +89,7 @@
             android:layout_height="wrap_content"
             android:text="Published Date"
             android:textColor="@color/secondary"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.cosc3p97.newshub.dao.AppDatabase;
 import com.cosc3p97.newshub.fragments.BookmarkFragment;
 import com.cosc3p97.newshub.fragments.EntertainmentFragment;
 import com.cosc3p97.newshub.fragments.FilterFragment;
@@ -19,7 +20,10 @@ import com.cosc3p97.newshub.fragments.ScienceFragment;
 import com.cosc3p97.newshub.fragments.SearchFragment;
 import com.cosc3p97.newshub.fragments.SettingsFragment;
 import com.cosc3p97.newshub.fragments.SportsFragment;
+import com.cosc3p97.newshub.models.Model;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,10 +70,26 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        bookmarkIcon.setOnClickListener(v -> loadFragment(new BookmarkFragment()));
+
+        bookmarkIcon.setOnClickListener(v -> {
+            new Thread(() -> {
+                List<Model> bookmarks = AppDatabase.getDatabase(MainActivity.this).bookmarkDao().getAllBookmarks();
+                if (bookmarks != null && !bookmarks.isEmpty()) {
+                    runOnUiThread(() -> loadFragment(new BookmarkFragment()));
+                } else {
+                    runOnUiThread(() ->
+                            Toast.makeText(MainActivity.this, "No bookmarks available.", Toast.LENGTH_SHORT).show()
+                    );
+                }
+            }).start();
+        });
+        settingsIcon.setOnClickListener(v -> {
+            loadFragment(new SettingsFragment());
+        });
         settingsIcon.setOnClickListener(v -> loadFragment(new SettingsFragment()));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.trim().isEmpty()) {
@@ -104,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadSearchFragment(String query) {
-        lastQuery = query; // Save the last query for filters
         SearchFragment searchFragment = new SearchFragment();
         Bundle args = new Bundle();
         args.putString("query", query); // Pass the query to the search fragment
