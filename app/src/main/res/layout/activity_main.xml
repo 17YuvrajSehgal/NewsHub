@@ -44,7 +44,6 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="5dp"
                 android:contentDescription="Bookmark Icon"
                 android:src="@drawable/ic_bookmarks"
                 app:layout_constraintBottom_toBottomOf="@+id/settingsIcon"
