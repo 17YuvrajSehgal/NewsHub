@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
      * Fetch news articles from the API
      */
     void getNews() {
-        String language = getSavedLanguageCode();
+        String language = "en";//getSavedLanguageCode();
 
         ApiUtilities.getApiInterface().getNews(language, API_KEY).enqueue(new Callback<MainNews>() {
             @Override

@@ -56,7 +56,7 @@ public class SportsFragment extends Fragment {
     void getNews() {
         String category = "sports";
         int pageSize = 100;
-        String language = getSavedLanguageCode();
+        String language = "en";//getSavedLanguageCode();
 
         ApiUtilities.getApiInterface().getCategory(language, category, pageSize, API_KEY).enqueue(new Callback<MainNews>() {
             @Override

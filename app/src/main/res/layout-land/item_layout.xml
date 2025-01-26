@@ -34,7 +34,7 @@
             android:id="@+id/bookmarkIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="20dp"
             android:contentDescription="Bookmark Icon"
             android:src="@drawable/ic_add_bookmark" />
     </LinearLayout>
