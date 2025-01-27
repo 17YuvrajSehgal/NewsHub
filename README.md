@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://cdn-icons-png.flaticon.com/512/1051/1051277.png" alt="News Icon" width="100"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Android Icon" width="100"/>
 </p>
 
 <h1 align="center">NewsHub - Android News App</h1>
