@@ -1,41 +1,48 @@
-# NewsHub - Android News App
+<p align="center">
+  <img src="https://cdn-icons-png.flaticon.com/512/1051/1051277.png" alt="News Icon" width="100"/>
+</p>
 
-**NewsHub** is an Android application that delivers the latest news from various categories. It integrates with the [NewsAPI](https://newsapi.org/) to fetch articles and provides features like bookmarking, searching, and language customization to enhance the user experience.
+<h1 align="center">NewsHub - Android News App</h1>
+
+<p align="center">
+  <strong>An Android application delivering the latest news from multiple categories.</strong><br/>
+  <em>Powered by <a href="https://newsapi.org/">NewsAPI</a></em>
+</p>
 
 ---
 
-## Features
+## ✨ Features
 
-1. **Home News Feed**
+1. **🏠 Home News Feed**
     - Displays the latest top headlines.
     - Automatically updates content based on user preferences.
 
-2. **Category-Specific News**
+2. **🗂️ Category-Specific News**
     - Browse news by categories: Health, Science, Sports, and Entertainment.
 
-3. **Search Functionality**
+3. **🔎 Search Functionality**
     - Search for articles using keywords.
 
-4. **Bookmarks**
+4. **📌 Bookmarks**
     - Save articles for future reading using Room Database.
 
-5. **Settings**
+5. **⚙️ Settings**
     - Change app language preferences.
     - Clear all saved bookmarks.
 
-6. **Detailed Reading**
+6. **📖 Detailed Reading**
     - Open full articles using an in-app WebView.
 
-7. **Animations and Smooth UI**
+7. **💫 Animations and Smooth UI**
     - RecyclerView with custom animations for better user experience.
 
 ---
 
-## Setup Instructions
+## 🚀 Setup Instructions
 
 ### Prerequisites
 
-- Android Studio installed on your machine.
+- <img src="https://img.shields.io/badge/Android%20Studio-4CAF50?style=flat&logo=android-studio&logoColor=white" alt="Android Studio Badge"/> Android Studio installed on your machine.
 - A valid API key from [NewsAPI](https://newsapi.org/).
 
 ### Steps to Setup
@@ -44,6 +51,8 @@
    ```bash
    git clone <repository-url>
    cd NewsHub
+
+
 
 
 ## Add Your API Key
@@ -71,11 +80,11 @@ public class Constants {
    **Run** (the green play button).
 
 
-## Code Structure
+## 🏗 Code Structure
 
 ---
 
-### API Integration
+### 🌐 API Integration
 
 #### **ApiInterface**
 - Defines API endpoints for fetching articles using Retrofit.
@@ -89,7 +98,7 @@ public class Constants {
 
 ---
 
-### Database
+### 🗃 Database
 
 #### **AppDatabase**
 - Implements a Room Database to manage bookmarks locally.
@@ -101,7 +110,7 @@ public class Constants {
 
 ---
 
-### UI Components
+### 🎨 UI Components
 
 #### **Fragments**
 - **HomeFragment:** Displays top news headlines.  
@@ -124,7 +133,7 @@ public class Constants {
   - Implements smooth animations for list items.
 
 
-## Key Files and Highlights
+## 📌 Key Files and Highlights
 
 - **Constants.java**  
   Stores the API key for NewsAPI. Make sure to replace `PUT_YOUR_KEY_HERE` with your actual API key.
@@ -143,18 +152,21 @@ public class Constants {
 
 ---
 
-## Technologies Used
+## 💻 Technologies Used
 
-- **Android SDK**  
-- **Retrofit** for API requests  
-- **Room Database** for local data storage  
-- **Glide** for image loading  
-- **RecyclerView** for dynamic UI rendering  
-- **WebView** for detailed article reading  
+| Technology                                                                                             | Description                                       |
+|--------------------------------------------------------------------------------------------------------|---------------------------------------------------|
+| <img src="https://img.shields.io/badge/Android_SDK-3DDC84?style=flat&logo=android&logoColor=white"/>   | Core framework for Android development            |
+| <img src="https://img.shields.io/badge/Retrofit-FFCA28?style=flat&logo=android&logoColor=black"/>      | For network requests to NewsAPI                   |
+| <img src="https://img.shields.io/badge/Room_Database-4285F4?style=flat&logo=google&logoColor=white"/>  | Local data storage for bookmarks                  |
+| <img src="https://img.shields.io/badge/Glide-8BC34A?style=flat&logo=android&logoColor=white"/>         | Efficient image loading in RecyclerView           |
+| <img src="https://img.shields.io/badge/RecyclerView-2196F3?style=flat&logo=android&logoColor=white"/>  | Dynamic and scrollable UI list                    |
+| <img src="https://img.shields.io/badge/WebView-9C27B0?style=flat&logo=android&logoColor=white"/>       | Display full articles inside the app              |
+  
 
 ---
 
-## Future Enhancements
+## 🔮 Future Enhancements
 
 1. **Dark Mode**  
    Provide an option for light and dark themes.
